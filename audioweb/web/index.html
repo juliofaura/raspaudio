@@ -1,0 +1,161 @@
+
+<!-- This is a go template. TO be used with header.html, which provides with the header of the actual HTML file -->
+
+
+      <div class="row flex">
+        <div class="col-md-12">
+          <h3>Hello, {{.account.Name}} {{.account.Surname}} (account ID {{.account.AccountID}})</h3>
+          <h4>Your account balance is {{printf "%.2f" .account.Balance}} {{.currency}}</h4>
+        </div>
+      </div>
+
+      <div class="row flex">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Transactions to date</h3>
+            </div>
+            <div class="panel-body">
+            	<table class="table table-condensed">
+            		<thead>
+            			<tr>
+            				<th>Time</th>
+                    <th>TransferID</th>
+            				<th>Type</th>
+            				<th>Account</th>
+            				<th>Amount ({{.currency}})</th>
+                    <th>Message</th>
+            			</tr>
+            		</thead>
+            		<tbody>
+                  {{range .transfers}}
+            			<tr>
+                    <th>{{.Time}}</th>
+                    <th>{{.TransferID}}</th>
+                    <th>{{.Type}}</th>
+                    <th>{{.Account}}</th>
+                    <th>{{printf "%.02f" .Amount}}</th>
+                    <th>{{.Message}}</th>
+            			</tr>
+                  {{end}}
+            		</tbody>
+            	</table>
+            </div>
+          </div>
+        </div>
+      </div><!-- row -->
+
+      <!-- Modal: internal transfer -->
+      <div class="modal fade" id="intTransferModal" tabindex="-1" role="dialog" aria-labelledby="intTransferModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form action="/sendtransfer" method="post">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="setModalLabel">Send internal transfer</h4>
+              </div>
+              <div class="modal-body">
+                <table>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">To account:</label></td>
+                    <td class="col-sm-8"><span class="form-account"><input type="text" name="toaccount" class="form-control" required></span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">Amount:</label></td>
+                    <td class="col-sm-8"><span class="form-amount"><input type="number" step="0.01" name="amount" class="form-control" required></span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">Message:</label></td>
+                    <td class="col-sm-8"><span class="form-message"><input type="text" name="message" class="form-control"></span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="padding-left:10px; padding-right:20px" class="col-sm-6"><button type="submit" name="submit" value="submit" class="btn btn-lg btn-primary">Send</button></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: external transfer -->
+      <div class="modal fade" id="extTransferModal" tabindex="-1" role="dialog" aria-labelledby="extTransferModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form action="/sendtransfer" method="post">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="setModalLabel">Send external transfer</h4>
+              </div>
+              <div class="modal-body">
+                <table>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">BIC code:</label></td>
+                    <td class="col-sm-8"><span class="form-account"><input type="text" name="biccode" class="form-control" required></span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">To account:</label></td>
+                    <td class="col-sm-8"><span class="form-account"><input type="text" name="toaccount" class="form-control" required></span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">Amount:</label></td>
+                    <td class="col-sm-8"><span class="form-amount"><input type="number" step="0.01" name="amount" class="form-control" required></span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding-left:10px; padding-right:20px" class="col-sm-4"><label class="control-label">Message:</label></td>
+                    <td class="col-sm-8"><span class="form-message"><input type="text" name="message" class="form-control"></span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="padding-left:10px; padding-right:20px" class="col-sm-6"><button type="submit" name="submit" value="submit" class="btn btn-lg btn-primary">Send</button></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Modal to show BIC Code -->
+      <div class="modal fade" id="bicCodeModal" tabindex="-1" role="dialog" aria-labelledby="bicCodeModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="manageModalLabel">BIC Code</h4>
+            </div>
+            <div class="modal-body">
+               BIC Code is {{.biccode}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/resources/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/resources/dist/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/docs.min.js"></script>
+
+  </body>
+
+</html>
