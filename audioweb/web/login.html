@@ -40,13 +40,15 @@
     {{end}}
 
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-12">
           <form class="form-signin" action="login">
             <h2 class="form-signin-heading">{{.pagetitle}}</h2>
-            <table>
-              <tr><td>1:></td><td>for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance | sudo tee $cpu/cpufreq/scaling_governor; done</td></tr>
-              <tr><td>2:></td><td>chrt 99 nice -19 jackd</td></tr>
-              <tr><td>3:></td><td>chrt 99 nice -19 /home/pi/Jamulus/Jamulus</td></tr>
+            	<table class="table table-condensed">
+            		<tbody>
+                  <tr><td>1:></td><td>for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance | sudo tee $cpu/cpufreq/scaling_governor; done</td></tr>
+                  <tr><td>2:></td><td>chrt 99 nice -19 jackd</td></tr>
+                  <tr><td>3:></td><td>chrt 99 nice -19 /home/pi/Jamulus/Jamulus</td></tr>
+                </tbody>
             </table>
             <p>
           </form>
