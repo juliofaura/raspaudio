@@ -10,7 +10,7 @@ check frequency with
 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
 ```
 
-Then set cpu to **performance**:
+Then set cpu to **performance** (put this in /etc/rc.local):
 ```
 for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance | sudo tee $cpu/cpufreq/scaling_governor; done
 ```
@@ -59,9 +59,13 @@ Then you start X by typing ```startx```
 
 https://github.com/piscue/Realtime-Kernel-RaspberryPi
 
+(better from a tmux!)
+
 ```
-sudo apt-get install git bc
-sudo apt install libncurses5-dev
+sudo apt update -y
+sudo apt install -y git bc
+sudo apt install -y libncurses5-dev
+sudo apt install -y bison flex
 git clone --depth=1 https://github.com/raspberrypi/linux
 cd linux
 KERNEL=kernel7
@@ -69,12 +73,6 @@ make bcm2709_defconfig
 make menuconfig
 make -j4 zImage modules dtbs
 sudo make modules_install
-ls
-cp arch/arm/boot/dts/*.dtb ../Downloads/newKernel/boot/
-cp arch/arm/boot/dts/overlays/*.dtb ../Downloads/newKernel/boot/overlays/
-cp arch/arm/boot/dts/overlays/*.dtb* ../Downloads/newKernel/boot/overlays/
-cp arch/arm/boot/dts/overlays/README ../Downloads/newKernel/boot/overlays/
-cp arch/arm/boot/zImage ../Downloads/newKernel/boot/$KERNEL.img
 sudo cp arch/arm/boot/*.dtb /boot/
 sudo cp arch/arm/boot/dts/*.dtb /boot/
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
@@ -96,6 +94,16 @@ sudo apt install -y libqt4-dev
 sudo apt install -y libqtgui4
 sudo apt install -y libqt4-network
 ```
+
+
+# Calling Jamulus from Windows
+
+* Install XMing: https://sourceforge.net/projects/xming/, create icon for XLaunch
+* Call XLaunch, Multiple windows, start no client, and click on "No access control" (important!)
+* Call qjackctl with ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
+* Call Jamuuls with  ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
+
+TO DO: Add a program to find the Raspberry's local IP
 
 
 # Running order
