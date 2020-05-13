@@ -28,7 +28,6 @@ type WSmessage struct {
 func HandleLaunchQjackctl(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	ip, ok := req.Form["toIP"]
-	fmt.Println("ip is", ip)
 	if !ok {
 		webutil.PushAlert(w, req, webutil.ALERT_DANGER, "Error!! bad call to launch Qjackctl")
 	} else {
@@ -51,7 +50,6 @@ func HandleLaunchQjackctl(w http.ResponseWriter, req *http.Request) {
 func HandleLaunchJamulus(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	ip, ok := req.Form["toIP"]
-	fmt.Println("ip is", ip)
 	if !ok {
 		webutil.PushAlert(w, req, webutil.ALERT_DANGER, "Error!! bad call to launch Jamulus")
 	} else {
