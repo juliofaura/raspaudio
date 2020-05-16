@@ -17,9 +17,11 @@ import (
 	"github.com/juliofaura/raspaudio/weblauncher/server"
 )
 
+const PING_TIMEOUT = 400 * time.Millisecond
+
 func testIP(url string) (found bool, err error) {
 	client := http.Client{
-		Timeout: 400 * time.Millisecond,
+		Timeout: PING_TIMEOUT,
 	}
 	toTest := url + "/ping?question=" + server.QUESTION
 	resp, thiserr := client.Get(toTest)
