@@ -39,27 +39,4 @@ Example: %s 8050\n`,
 		time.Sleep(10 * time.Second)
 	}
 
-	/*
-		for {
-			reader := bufio.NewReader(os.Stdin)
-			fmt.Print("Demobank console: ")
-			s, _ := reader.ReadString('\n')
-			command := strings.Fields(s)
-			if len(command) >= 1 {
-				switch command[0] {
-				case "exit":
-					fmt.Println("Have a nice day!")
-					os.Exit(0)
-				case "showBalance":
-					// To do
-					fmt.Printf("Not implemented yet, stay tuned\n")
-				case "showTransfer":
-					// To do
-					fmt.Printf("Not implemented yet, stay tuned\n")
-				default:
-					fmt.Printf("Unknown command %v\n", command)
-				}
-			}
-		}
-	*/
 }

@@ -20,7 +20,6 @@ Then measure again:
 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
 ```
 
-
 - Enable real time scheduling
 
 Add permissions for the @audio user group in ```/etc/security/limits.conf``` and ```/etc/security/limits.d/audio.conf```
@@ -31,7 +30,54 @@ Add permissions for the @audio user group in ```/etc/security/limits.conf``` and
 @audio     -    nice       -19
 ```
 
-# Real time linux core
+
+# Jamulus
+
+Copy the installed version, then enable the QT libraries:
+
+```
+sudo apt update
+sudo apt install -y libqt4-dev
+```
+
+(in a previous experience the following was sufficient:)
+```
+sudo apt install -y libqtgui4
+sudo apt install -y libqt4-network
+```
+
+
+# Calling Jamulus from Windows
+
+* Install XMing: https://sourceforge.net/projects/xming/, create icon for XLaunch
+* Call XLaunch, Multiple windows, start no client, and click on "No access control" (important!)
+* Call qjackctl with ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
+* Call Jamuuls with  ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
+
+
+# Installing the audioweb
+
+
+# Running order
+
+1. Plug in the HDMI cable, the ethernet cable, the audio interface, the keyboard and the mouse
+
+2. Plug the power adapted to turn the raspberry on, and wait until it boots
+
+3. Call ```qjackctl``` and:
+  - Blah
+  - Blah
+
+4. Call ```Jamulus``` and connect:
+  - Start it as a real time process with ```chrt 95 nice -n -19 ./Jamulus```
+  - Blah
+
+5. Enjoy
+
+
+=======
+
+# Appendix: Real time linux core
 
 ## Real time distro
 
@@ -79,46 +125,4 @@ sudo cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
 sudo cp arch/arm/boot/dts/overlays/README /boot/overlays/
 sudo cp arch/arm/boot/zImage /boot/$KERNEL.img
 ```
-
-# Jamulus
-
-Copy the installed version, then enable the QT libraries:
-
-```
-sudo apt update
-sudo apt install -y libqt4-dev
-```
-
-(in a previous experience the following was sufficient:)
-```
-sudo apt install -y libqtgui4
-sudo apt install -y libqt4-network
-```
-
-
-# Calling Jamulus from Windows
-
-* Install XMing: https://sourceforge.net/projects/xming/, create icon for XLaunch
-* Call XLaunch, Multiple windows, start no client, and click on "No access control" (important!)
-* Call qjackctl with ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
-* Call Jamuuls with  ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
-
-TO DO: Add a program to find the Raspberry's local IP
-
-
-# Running order
-
-1. Plug in the HDMI cable, the ethernet cable, the audio interface, the keyboard and the mouse
-
-2. Plug the power adapted to turn the raspberry on, and wait until it boots
-
-3. Call ```qjackctl``` and:
-  - Blah
-  - Blah
-
-4. Call ```Jamulus``` and connect:
-  - Start it as a real time process with ```chrt 95 nice -n -19 ./Jamulus```
-  - Blah
-
-5. Enjoy
 

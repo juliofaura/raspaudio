@@ -19,7 +19,7 @@ import (
 
 func testIP(url string) (found bool, err error) {
 	client := http.Client{
-		Timeout: 200 * time.Millisecond,
+		Timeout: 400 * time.Millisecond,
 	}
 	toTest := url + "/ping?question=" + server.QUESTION
 	resp, thiserr := client.Get(toTest)

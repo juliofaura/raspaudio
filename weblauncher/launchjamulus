@@ -3,4 +3,10 @@ if [[ "$1" != "" ]]
 	then
 		export DISPLAY=$1
 fi
+
+if [[ $XDG_RUNTIME_DIR == "" ]]
+	then
+    	export XDG_RUNTIME_DIR="/run/user/1000"
+fi
+
 nohup chrt 99 nice -19 /home/pi/Jamulus/Jamulus &
