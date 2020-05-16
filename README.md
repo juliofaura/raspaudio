@@ -55,25 +55,52 @@ sudo apt install -y libqt4-network
 * Call Jamuuls with  ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
 
 
-# Installing the weblauncher
+# Web tools
 
-## 
+## audioweb
+
+```audioweb``` is a simple static page so windows clients can download the Xming installer (simply copied from the official site) and the raspberry finder / connector in a very easy way. You simple have clone the repository, move to the audioweb directory, ```go build``` and launch the web with ```./audioweb <port>```
+
+## weblauncher
+
+```weblauncher``` is a more interesting yet simple web tool that can be installed in the raspberry to allow windwos users launch and manage jack and Jamulus. To install it, just clone this repository, move to the weblauncher directory, ```go build``` and launch the web with ```./weblauncher```. This program uses the port 8777 for all communications
+
+IMPORTANT: normally you would prefer ```weblauncher``` to be run upon boot, which entails calling it from a boot script. It is important to do so with the right permissions and, importantly, with the ability to schedule real time processes (i.e. with permission to run chrt for example), as this will be needed when weblauncher later on tries to run both qjackctl, jackd and Jamulus. This would NOT be the case if you try to run ```weblauncher``` from the ```rc.local``` script for example, even if you try sudo'ing. A good alternative way to do this is to simply establish a crontab for the pi user:
+
+```
+@reboot cd /home/pi/weblauncher; ./weblauncher &
+```
+
+## connector
+
+```connector``` is a simple tool to find the raspberry in a local area network. The program simply iterates throughout the local area network (based on the client IP and the netmask) and pings the weblauncher port (8777) in all the addresses. When it finds the raspberry, then it launches a browser pointing at the weblauncher, thus allowing the user to launch and manager qkackctl and Jamulus
+
 
 # Running order
 
-1. Plug in the HDMI cable, the ethernet cable, the audio interface, the keyboard and the mouse
+## From a windows laptop
 
-2. Plug the power adapted to turn the raspberry on, and wait until it boots
+Pre-requisite is to instal Xmin (https://sourceforge.net/projects/xming/) and run Xlaunch with "no access control", as explained above. And also have ```conector.exe``` at hand. You can download both things from http://cebollo.ddns.net
 
-3. Call ```qjackctl``` and:
-  - Blah
-  - Blah
+1. Plug the ethernet cable to the raspberry, thenp lug the power adapted to turn the raspberry on, and wait until it boots
 
-4. Call ```Jamulus``` and connect:
-  - Start it as a real time process with ```chrt 95 nice -n -19 ./Jamulus```
-  - Blah
+2. In your laptop, run ```connector.exe``` and wait until the browser comes up with the raspberry weblauncher page. You can note and bookmark the url in the browser, so you don't need to look for it every time.
 
-5. Enjoy
+3. Click on ```Launch Qjackctl``` and:
+  - Press "Setup"
+  - Click on the "Parameters" tab and set "Sample Rate" to 48000, "Frames/Period" to 128, and "Periods/Buffer" to 2
+  - Click on the "Advanced" tab and set "Priority" to 99, "PortMaximum" to 1024, and "Timeout" to 500. Then "Audio" to Duplex, Dither to "None", and make sure "Output device" and "Input Device" are set appropriately (i.e. using the sound card, not the default Alsa driver). Also the "Server Prefix" text box should have the following: ```chrt 99 nice -19 jackd". Finally, click on "OK" (or "Cancel" if you have not changed anything)
+  - Click on "Start", so the jack server is run
+
+4. Click on ```Jamulus``` and:
+  - Press "Connect" in the Qjackctl console
+  - In the connections screen, make the appropriate connections. If you are using a simple sound card with a mono microphone input, you should connect the "capture_1" input from the "system" source to both inputs of the Jamulus writable client ("input left" and "input right")
+  - In the Jamulus screen, press "Settings"
+  - Uncheck the Jitter Buffer "Auto" box, and set both Jitter sliders ("Local" and "Server") to 5. Then set "Audio Channels" to "Stereo", "Audio Quality" to "High"
+  - In the Jamulus main window, press "Connect"
+  - In the "Server Name/Address" box, enter "cebollo.ddns.net", and press "Connect"
+
+5. Enjoy! you should be connected now. You can turn down the volume of your own channel if you don't want to hear your own voice, and you can change the volumes of the different tracks to produce your own mix
 
 
 =======
