@@ -44,29 +44,40 @@
         <h2 class="form-signin-heading">{{.pagetitle}}</h2>
           <table class="table table-condensed">
             <tbody>
-              <tr><td>Raspberry alive and kicking</td></tr>
-              <tr><td>Primary, outbound IP is {{.myIP}}</td></tr>
-              <tr><td>
+              <tr><td colspan="2">Raspberry alive and kicking</td></tr>
+              <tr><td colspan="2">Primary, outbound IP is {{.myIP}}</td></tr>
+              <tr><td colspan="2">
                 List of Ips is:
                 <table>
                   <tbody>
                     {{range .IPs}}
-                    <tr><td>IP = {{.IP}}, mask = {{.Mask}}</td></tr>
+                    <tr><td colspan="2">IP = {{.IP}}, mask = {{.Mask}}</td></tr>
                     {{end}}
                   </tbody>
                 </table>
               </td></tr>
-              <tr><td>Calling from {{.from}}</td></tr>
-              <tr><td>
+              <tr><td colspan="2">Calling from {{.from}}</td></tr>
+              <tr><td colspan="2">
                 <form action="/launchQjackctl" method="post">
                   <input type="hidden" value="{{.from}}" name="toIP" class="form-control">
                   <button class="btn btn-lg btn-primary btn-block" type="submit">Launch Qjackctl</button>
                 </form>
               </td></tr>
-              <tr><td>
+              <tr><td colspan="2">
                 <form action="/launchJamulus" method="post">
                   <input type="hidden" value="{{.from}}" name="toIP" class="form-control">
                   <button class="btn btn-lg btn-primary btn-block" type="submit">Launch Jamulus</button>
+                </form>
+              </td></tr>
+              <tr><td>
+                <form action="/launchAlsamixer" method="post">
+                  <input type="hidden" value="{{.from}}" name="toIP" class="form-control">
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Launch Sound Card Control</button>
+                </form>
+                </td><td>
+                <form action="/launchAlsamixergui" method="post">
+                  <input type="hidden" value="{{.from}}" name="toIP" class="form-control">
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Launch Sound Card Control (GIU)</button>
                 </form>
               </td></tr>
               <!-- </td<button class="btn btn-lg btn-primary btn-block" type="submit">Launch Jamulus</button></tr> -->

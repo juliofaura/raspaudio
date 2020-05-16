@@ -69,6 +69,50 @@ func HandleLaunchJamulus(w http.ResponseWriter, req *http.Request) {
 	webutil.Reload(w, req, "/")
 }
 
+func HandleLaunchAlsamixer(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	ip, ok := req.Form["toIP"]
+	if !ok {
+		webutil.PushAlert(w, req, webutil.ALERT_DANGER, "Error!! bad call to launch alsamixer")
+	} else {
+		path, err := os.Getwd()
+		if err != nil {
+			webutil.PushAlert(w, req, webutil.ALERT_DANGER, "Error!! can't find the current path")
+			log.Println(err)
+		}
+		cmd := exec.Command(path+"/launchalsamixer", ip[0]+":0")
+		err = cmd.Run()
+		if err != nil {
+			webutil.PushAlert(w, req, webutil.ALERT_DANGER, fmt.Sprint(err)+"\nCommand was: "+path+"/launchalsamixer "+ip[0]+":0")
+		} else {
+			webutil.PushAlert(w, req, webutil.ALERT_SUCCESS, "Alsamixer successfully launched (hopefully)")
+		}
+	}
+	webutil.Reload(w, req, "/")
+}
+
+func HandleLaunchAlsamixergui(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	ip, ok := req.Form["toIP"]
+	if !ok {
+		webutil.PushAlert(w, req, webutil.ALERT_DANGER, "Error!! bad call to launch alsamixergui")
+	} else {
+		path, err := os.Getwd()
+		if err != nil {
+			webutil.PushAlert(w, req, webutil.ALERT_DANGER, "Error!! can't find the current path")
+			log.Println(err)
+		}
+		cmd := exec.Command(path+"/launchalsamixergui", ip[0]+":0")
+		err = cmd.Run()
+		if err != nil {
+			webutil.PushAlert(w, req, webutil.ALERT_DANGER, fmt.Sprint(err)+"\nCommand was: "+path+"/launchalsamixergui "+ip[0]+":0")
+		} else {
+			webutil.PushAlert(w, req, webutil.ALERT_SUCCESS, "Alsamixergui successfully launched (hopefully)")
+		}
+	}
+	webutil.Reload(w, req, "/")
+}
+
 func HandlePingService(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	token, ok := req.Form["question"]

@@ -55,6 +55,26 @@ sudo apt install -y libqt4-network
 * Call Jamuuls with  ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
 
 
+# Controlling the sound card
+
+The sound card can be controlled using ```alsamixer```, or graphically using ```alsamixergui``` (use ```sudo apt install alsamixergui``` to install).
+
+In order to launch this remotely, you can use either:
+
+```
+lxterminal --display=192.168.1.23:0 --command alsamixer
+```
+
+or
+
+```
+alsamixergui --display=192.168.1.23:0 -c 1
+```
+
+(the ```-c 1``` option above selects sound card #1, you may need to tune this for your specific card)
+
+
+
 # Web tools
 
 ## audioweb
@@ -63,7 +83,7 @@ sudo apt install -y libqt4-network
 
 ## weblauncher
 
-```weblauncher``` is a more interesting yet simple web tool that can be installed in the raspberry to allow windwos users launch and manage jack and Jamulus. To install it, just clone this repository, move to the weblauncher directory, ```go build``` and launch the web with ```./weblauncher```. This program uses the port 8777 for all communications
+```weblauncher``` is a more interesting yet simple web tool that can be installed in the raspberry to allow windwos users launch and manage jack, Jamulus and the soundcard. To install it, just clone this repository, move to the weblauncher directory, ```go build``` and launch the web with ```./weblauncher```. This program uses the port 8777 for all communications
 
 IMPORTANT: normally you would prefer ```weblauncher``` to be run upon boot, which entails calling it from a boot script. It is important to do so with the right permissions and, importantly, with the ability to schedule real time processes (i.e. with permission to run chrt for example), as this will be needed when weblauncher later on tries to run both qjackctl, jackd and Jamulus. This would NOT be the case if you try to run ```weblauncher``` from the ```rc.local``` script for example, even if you try sudo'ing. A good alternative way to do this is to simply establish a crontab for the pi user:
 
@@ -92,7 +112,7 @@ Pre-requisite is to instal Xmin (https://sourceforge.net/projects/xming/) and ru
   - Click on the "Advanced" tab and set "Priority" to 99, "PortMaximum" to 1024, and "Timeout" to 500. Then "Audio" to Duplex, Dither to "None", and make sure "Output device" and "Input Device" are set appropriately (i.e. using the sound card, not the default Alsa driver). Also the "Server Prefix" text box should have the following: ```chrt 99 nice -19 jackd". Finally, click on "OK" (or "Cancel" if you have not changed anything)
   - Click on "Start", so the jack server is run
 
-4. Click on ```Jamulus``` and:
+4. Click on ```Launch Jamulus``` and:
   - Press "Connect" in the Qjackctl console
   - In the connections screen, make the appropriate connections. If you are using a simple sound card with a mono microphone input, you should connect the "capture_1" input from the "system" source to both inputs of the Jamulus writable client ("input left" and "input right")
   - In the Jamulus screen, press "Settings"
@@ -101,6 +121,8 @@ Pre-requisite is to instal Xmin (https://sourceforge.net/projects/xming/) and ru
   - In the "Server Name/Address" box, enter "cebollo.ddns.net", and press "Connect"
 
 5. Enjoy! you should be connected now. You can turn down the volume of your own channel if you don't want to hear your own voice, and you can change the volumes of the different tracks to produce your own mix
+
+6. Click on ```Launch sound card control``` if you want to configure and control the sound card (i.e. change the input / output levels, etc.)
 
 
 =======

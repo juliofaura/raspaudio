@@ -76,6 +76,8 @@ func StartWeb() {
 	http.Handle("/", http.HandlerFunc(HandleRoot))
 	http.Handle("/launchQjackctl", http.HandlerFunc(HandleLaunchQjackctl))
 	http.Handle("/launchJamulus", http.HandlerFunc(HandleLaunchJamulus))
+	http.Handle("/launchAlsamixer", http.HandlerFunc(HandleLaunchAlsamixer))
+	http.Handle("/launchAlsamixergui", http.HandlerFunc(HandleLaunchAlsamixergui))
 	http.Handle("/ping", http.HandlerFunc(HandlePingService))
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir(WEB_PATH+"resources"))))
 	go func() {

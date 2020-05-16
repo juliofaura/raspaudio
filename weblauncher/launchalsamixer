@@ -1,0 +1,12 @@
+#!/bin/bash
+if [[ "$1" != "" ]]
+	then
+		export DISPLAY=$1
+fi
+
+if [[ $XDG_RUNTIME_DIR == "" ]]
+	then
+    	export XDG_RUNTIME_DIR="/run/user/1000"
+fi
+
+lxterminal --command alsamixer &
