@@ -55,8 +55,9 @@ sudo apt install -y libqt4-network
 * Call Jamuuls with  ```ssh pi@<pi's IP in here>  "export DISPLAY=$(echo $SSH_CLIENT|awk '{print $1}'):0;qjackctl"```
 
 
-# Installing the audioweb
+# Installing the weblauncher
 
+## 
 
 # Running order
 
