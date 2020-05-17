@@ -1,14 +1,12 @@
 package server
 
 import (
+	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/juliofaura/webutil"
-)
-
-const (
-	XMIN_INSTALLER = "Xming-6-9-0-31-setup.exe"
-	CONNECTOR      = "connector.exe"
 )
 
 func HandleIndex(w http.ResponseWriter, req *http.Request) {
@@ -43,4 +41,25 @@ func HandleRetrieve(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 	webutil.Reload(w, req, "/")
+}
+
+func HandlePingService(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	question, ok := req.Form["question"]
+	if !ok || question[0] != PING_QUESTION {
+		log.Println("Wrong ping request from", req.RemoteAddr, "(bad question)")
+		resp, _ := json.Marshal(ERROR_RESPONSE)
+		fmt.Fprint(w, string(resp))
+		return
+	}
+	data, ok := req.Form["data"]
+	if !ok {
+		log.Println("Wrong ping request from", req.RemoteAddr, "(no data)")
+		resp, _ := json.Marshal(ERROR_RESPONSE)
+		fmt.Fprint(w, string(resp))
+		return
+	}
+	log.Println("Ping request received from", req.RemoteAddr, ", data is", data[0])
+	resp, _ := json.Marshal(SUCCESS_RESPONSE)
+	fmt.Fprint(w, string(resp))
 }

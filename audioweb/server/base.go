@@ -28,6 +28,11 @@ const (
 	SESSIONALERTSPREFIX    = "myPendingAlerts"
 	ACCOUNT                = "user"
 	PASSWORD               = "1234"
+	XMIN_INSTALLER         = "Xming-6-9-0-31-setup.exe"
+	CONNECTOR              = "connector.exe"
+	PING_QUESTION          = "Registering_jamulus_raspberry_from_abroad"
+	SUCCESS_RESPONSE       = "Thanks very much"
+	ERROR_RESPONSE         = "What???"
 )
 
 var (
@@ -72,6 +77,7 @@ func StartWeb() {
 	)
 	http.Handle("/", http.HandlerFunc(HandleIndex))
 	http.Handle("/retrieve", http.HandlerFunc(HandleRetrieve))
+	http.Handle("/ping", http.HandlerFunc(HandlePingService))
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir(WEB_PATH+"resources"))))
 	//http.Handle("/local_resources/", http.StripPrefix("/local_resources/", http.FileServer(http.Dir("./local_resources"))))
 	go func() {
