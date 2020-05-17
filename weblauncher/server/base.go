@@ -19,20 +19,20 @@ import (
 ///////////////////////////////////////////////////
 
 const (
-	WEB_PATH               = "./web/"
-	HEADER_TEMPLATE_FILE   = "header.html"
-	ERROR_TEMPLATE_FILE    = "error.html"
-	BACKGROUNDPICSDIR      = "(not used)"
-	SESSIONNAMEPREFIX      = "mysession"
-	SESSIONSTORENAMEPREFIX = "mycookiestore2345234xjhkh"
-	SESSIONALERTSPREFIX    = "myPendingAlerts"
-	ACCOUNT                = "user"
-	PASSWORD               = "1234"
-)
-
-var (
-	WEBPORT           string = "8777"
-	HEADER_PAGE_TITLE string = "Raspberry web launcher"
+	WEB_PATH                      = "./web/"
+	HEADER_TEMPLATE_FILE          = "header.html"
+	ERROR_TEMPLATE_FILE           = "error.html"
+	BACKGROUNDPICSDIR             = "(not used)"
+	SESSIONNAMEPREFIX             = "mysession"
+	SESSIONSTORENAMEPREFIX        = "mycookiestore2345234xjhkh"
+	SESSIONALERTSPREFIX           = "myPendingAlerts"
+	ACCOUNT                       = "user"
+	PASSWORD                      = "1234"
+	PING_QUESTION                 = "Are_you_the_raspberry"
+	SUCCESS_RESPONSE              = "Here I am"
+	ERROR_RESPONSE                = "Are you drunk?"
+	WEBPORT                       = "8777"
+	HEADER_PAGE_TITLE      string = "Raspberry web launcher"
 )
 
 var (
