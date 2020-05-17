@@ -30,6 +30,13 @@ func main() {
 
 	server.StartWeb()
 
+	myHost, err := os.Hostname()
+	if err == nil {
+		server.HOSTNAME += myHost
+	} else {
+		server.HOSTNAME += "no_hostname"
+	}
+
 	for {
 		myIP := netUtils.GetOutboundIP()
 		myIPs := netUtils.ResolveHostIP()
@@ -40,13 +47,7 @@ func main() {
 			}
 			resolvedIPs += v.IP
 		}
-		data := myIP.String() + "[" + resolvedIPs + "]"
-		myHost, err := os.Hostname()
-		if err == nil {
-			data += "(" + myHost + ")"
-		} else {
-			data += "(no_host)"
-		}
+		data := myIP.String() + "[" + resolvedIPs + "](" + server.HOSTNAME + ")"
 		log.Println("Now pinging, data is", data)
 
 		client := http.Client{

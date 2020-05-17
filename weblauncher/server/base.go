@@ -39,6 +39,7 @@ var (
 	SESSIONNAME      string
 	SESSIONSTORENAME string
 	SESSIONALERTS    string
+	HOSTNAME         string
 )
 
 var templates *template.Template

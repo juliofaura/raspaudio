@@ -25,6 +25,7 @@ func HandleRoot(w http.ResponseWriter, req *http.Request) {
 	passdata := map[string]interface{}{
 		"pagetitle": "Hello from the raspberry",
 		"myIP":      netUtils.GetOutboundIP(),
+		"hostname":  HOSTNAME,
 		"IPs":       netUtils.ResolveHostIP(),
 		"from":      netUtils.ReadUserIP(req),
 		"alerts":    webutil.PopAlerts(w, req),
