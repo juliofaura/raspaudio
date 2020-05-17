@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	//"strings"
@@ -40,6 +41,12 @@ func main() {
 			resolvedIPs += v.IP
 		}
 		data := myIP.String() + "[" + resolvedIPs + "]"
+		myHost, err := os.Hostname()
+		if err == nil {
+			data += "(" + myHost + ")"
+		} else {
+			data += "(no_host)"
+		}
 		log.Println("Now pinging, data is", data)
 
 		client := http.Client{
