@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	// driver "gitlab.com/gomidi/rtmididrv"
-	driver "gitlab.com/gomidi/portmididrv"
+	driver "gitlab.com/gomidi/rtmididrv"
+	// driver "gitlab.com/gomidi/portmididrv"
 )
 
 func check(e error) {
