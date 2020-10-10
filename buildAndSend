@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ "$#" -ne 2 ]
+    then
+        echo "Wrong number of parameters"
+        echo "Usage: $0 <code directory> <destination host for binary>"
+        exit 1
+fi
+
+if [ ! -d $1 ]
+    then
+        echo "Code directory does not exist"
+        echo "Usage: $0 <code directory> <destination host for binary>"
+        exit 1
+fi
+
+if [ ! $(ping -c 1 -W 1 $2 &> /dev/null && echo 1) ]
+    then
+        echo "Destination host for binary ($2) not active"
+        echo "Usage: $0 <code directory> <destination host for binary>"
+        exit 1
+fi
+
+cd $1
+env GOOS=linux GOARCH=arm GOARM=5 go build && scp ./$1 pi@$2:.
+cd ..
+
+echo "Done!"

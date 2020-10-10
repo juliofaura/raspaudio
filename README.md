@@ -91,6 +91,13 @@ IMPORTANT: normally you would prefer ```weblauncher``` to be run upon boot, whic
 @reboot cd /home/pi/weblauncher; ./weblauncher &
 ```
 
+This one is better to redirect output to a file:
+
+```
+@reboot cd /home/pi/weblauncher; ./weblauncher &>> ./weblauncher.log &
+```
+
+
 ## connector
 
 ```connector``` is a simple tool to find the raspberry in a local area network. The program simply iterates throughout the local area network (based on the client IP and the netmask) and pings the weblauncher port (8777) in all the addresses. When it finds the raspberry, then it launches a browser pointing at the weblauncher, thus allowing the user to launch and manager qkackctl and Jamulus
