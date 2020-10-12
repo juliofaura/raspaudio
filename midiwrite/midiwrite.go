@@ -6,6 +6,8 @@ import (
 	"os"
 	"time"
 
+	"gitlab.com/gomidi/midi"
+	"gitlab.com/gomidi/midi/reader"
 	driver "gitlab.com/gomidi/rtmididrv"
 	// driver "gitlab.com/gomidi/portmididrv"
 )
@@ -60,17 +62,17 @@ func main() {
 	// out.Write(noteOff)
 	// time.Sleep(1 * time.Second)
 
-	// rd := reader.New(
-	// 	reader.NoLogger(),
-	// 	// write every message to the out port
-	// 	reader.Each(func(pos *reader.Position, msg midi.Message) {
-	// 		fmt.Printf("got %s\n", msg)
-	// 	}),
-	// )
+	rd := reader.New(
+		reader.NoLogger(),
+		// write every message to the out port
+		reader.Each(func(pos *reader.Position, msg midi.Message) {
+			fmt.Printf("got %s\n", msg)
+		}),
+	)
 
-	// // listen for MIDI
-	// err = rd.ListenTo(in)
-	// check(err)
+	// listen for MIDI
+	err = rd.ListenTo(in)
+	check(err)
 
 	speed := 50 * time.Millisecond
 
@@ -83,6 +85,8 @@ func main() {
 		out.Write(noteOff)
 		time.Sleep(speed)
 	}
+
+	time.Sleep(1 * time.Hour)
 
 	os.Exit(0)
 
