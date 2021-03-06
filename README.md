@@ -46,6 +46,18 @@ sudo apt install -y libqtgui4
 sudo apt install -y libqt4-network
 ```
 
+# Jamulus server
+
+Call Jamulus with the server option, and put it e.g. in rc.local:
+
+```
+#!/bin/bash
+nohup sudo chrt 99 ionice -c1 nice -n -19 /home/julio/Jamulus/Jamulus -s -n -g -l /var/log/llconserver1 -o "julioServer;Boadilla del Monte;197" > /home/julio/Jamulus.log &
+cd ~julio/go/src/github.com/juliofaura/raspaudio/audioweb; ./audioweb 8050 &>> audioweb.log &
+```
+
+(Real time permissions also have to be set up in the Jamulus server)
+
 
 # Calling Jamulus from Windows
 
